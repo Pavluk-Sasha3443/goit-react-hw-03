@@ -20,9 +20,10 @@ function App() {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, actions) => {
     values.id = nanoid();
     setContacts((prevContacts) => [...prevContacts, values]);
+    actions.resetForm();
   };
 
   const handleChange = (evt) => {
