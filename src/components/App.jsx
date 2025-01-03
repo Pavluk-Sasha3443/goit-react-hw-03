@@ -1,8 +1,8 @@
 import ContactForm from "./ContactForm/ContactForm";
-import s from "./App.module.css";
+import css from "./App.module.css";
 import SearchBox from "./SearchBox/SearchBox";
 import ContactList from "./ContactList/ContactList";
-import defaultContacts from "./contacts.json";
+import AllContacts from "./contacts.json";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
@@ -13,24 +13,24 @@ function App() {
     if (storage) {
       return JSON.parse(storage);
     }
-    return defaultContacts;
+    return AllContacts;
   });
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (values) => {
     values.id = nanoid();
-    setContacts([...contacts, values]);
-    actions.resetForm();
+    setContacts((prevContacts) => [...prevContacts, values]);
   };
+
   const handleChange = (evt) => {
     setInputValue(evt.target.value);
   };
 
   const result = contacts.filter(({ name }) =>
-    name.toLowerCase().match(inputValue.toLowerCase())
+    name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const onDelete = (id) => {
@@ -39,7 +39,7 @@ function App() {
 
   return (
     <>
-      <h1 className={s.title}>Phonebook</h1>
+      <h1 className={css.title}>Phonebook</h1>
       <ContactForm handleSubmit={handleSubmit} />
       <SearchBox handleChange={handleChange} inputValue={inputValue} />
       <ContactList numberPhone={result} onDelete={onDelete} />
