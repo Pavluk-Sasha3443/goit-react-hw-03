@@ -12,7 +12,7 @@ const Contact = ({ name, number, onDelete }) => {
         </div>
         <div className={css.box}>
           <ImPhone size={24} />
-          <p>{number}</p>
+          <p className={css.text}>{number}</p>
         </div>
       </div>
       <button onClick={onDelete} className={css.btnDelete} type="button">
